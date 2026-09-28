@@ -64,6 +64,7 @@ public class GuiEndPoem extends GuiScreen {
     private int tick = 0;
     private IGuiTexture logoTexture;
     private PositionedSound playing;
+    private boolean rangOut = false; // Poem finished on its own, let the track play to its end
 
     public GuiEndPoem(ResourceLocation poemText, ResourceLocation creditsText, ResourceLocation music,
         ResourceLocation logo) {
@@ -98,38 +99,44 @@ public class GuiEndPoem extends GuiScreen {
 
     @Override
     public void onGuiClosed() {
-        if (playing != null) {
+        // A poem that ran its course leaves the track alone so it can finish on its own
+        if (playing != null && !rangOut) {
             mc.getSoundHandler()
                 .stopSound(playing);
             playing = null;
         }
     }
 
+    private void close(boolean poemFinished) {
+        rangOut = poemFinished;
+        mc.displayGuiScreen((GuiScreen) null);
+    }
+
     @Override
     public void updateScreen() {
         if (lines.isEmpty()) { // Nothing to read, i.e. a missing or empty text file
-            mc.displayGuiScreen((GuiScreen) null);
+            close(false);
             return;
         }
 
         tick++;
 
         if (tick >= endTick + HOLD_TICKS + FADE_TICKS) {
-            mc.displayGuiScreen((GuiScreen) null);
+            close(true);
         }
     }
 
     @Override
     public void keyTyped(char typedChar, int keyCode) {
         if (keyCode == 1 /* ESC */ || keyCode == 57 /* SPACE */) {
-            mc.displayGuiScreen((GuiScreen) null);
+            close(false);
         }
     }
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            mc.displayGuiScreen((GuiScreen) null);
+            close(false);
         }
     }
 
@@ -313,8 +320,8 @@ public class GuiEndPoem extends GuiScreen {
     // endregion
 
     /**
-     * Loops until stopped. {@code repeat} and the repeat delay are protected, so a subclass is the only way
-     * to get a looping sound out of the vanilla sound handler.
+     * Plays once through. {@code repeat} and the repeat delay are protected, so a subclass is the only way to
+     * hand a custom sound to the vanilla sound handler.
      */
     public static class PoemSound extends PositionedSound {
 
@@ -325,7 +332,7 @@ public class GuiEndPoem extends GuiScreen {
             this.xPosF = 0.0F;
             this.yPosF = 0.0F;
             this.zPosF = 0.0F;
-            this.repeat = true;
+            this.repeat = false;
             this.field_147665_h = 0;
             this.field_147666_i = AttenuationType.NONE;
         }

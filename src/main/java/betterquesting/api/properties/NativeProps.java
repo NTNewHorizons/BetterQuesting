@@ -66,7 +66,8 @@ public class NativeProps {
     public static final IPropertyType<String> POEM_CREDITS = new PropertyTypeString(
         new ResourceLocation("betterquesting:poem_credits"),
         "");
-    // Optional looping sound, i.e. "mymod:music/credits" -> assets/mymod/sounds/music/credits.ogg
+    // Optional music, i.e. "mymod:music/credits" -> assets/mymod/sounds/music/credits.ogg.
+    // Plays once and is left to end on its own if the poem runs out, cut off if skipped.
     public static final IPropertyType<String> POEM_MUSIC = new PropertyTypeString(
         new ResourceLocation("betterquesting:poem_music"),
         "");
