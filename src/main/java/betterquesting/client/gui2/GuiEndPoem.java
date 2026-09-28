@@ -41,7 +41,7 @@ public class GuiEndPoem extends GuiScreen {
     private static final int LOGO_WIDTH = 310;
     private static final int LOGO_HEIGHT = 44;
     private static final int LOGO_GAP = 200; // Vanilla keeps the text this far below the logo
-    private static final int HOLD_TICKS = 30; // Rest on the last line before fading out
+    private static final int HOLD_TICKS = 20 * 20; // Rest 20s on the last line before fading out
     private static final int FADE_TICKS = 40;
     private static final int CREDITS_GAP = 8;
 
