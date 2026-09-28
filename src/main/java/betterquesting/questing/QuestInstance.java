@@ -94,7 +94,6 @@ public class QuestInstance implements IQuest {
         setupValue(NativeProps.NOTIFICATION_EFFECT);
         setupValue(NativeProps.IS_FINAL);
         setupValue(NativeProps.POEM_TEXT);
-        setupValue(NativeProps.POEM_CREDITS);
         setupValue(NativeProps.POEM_MUSIC);
         setupValue(NativeProps.POEM_LOGO);
 

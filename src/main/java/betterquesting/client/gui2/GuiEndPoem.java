@@ -1,12 +1,14 @@
 package betterquesting.client.gui2;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
@@ -25,12 +27,15 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * Vanilla {@code GuiWinGame} (the end poem) with the poem, credits, music and logo pulled from the final
+ * Vanilla {@code GuiWinGame} (the end poem) with the poem, music and logo pulled from the final
  * quest's {@code poem_*} properties instead of being hard coded.
  * <p>
- * Text files follow the vanilla format: one line per paragraph, {@code §} formatting, {@code PLAYERNAME}
+ * The poem follows the vanilla format: one line per paragraph, {@code §} formatting, {@code PLAYERNAME}
  * replaced with the player's name and the {@code §f§k§a§b} marker sequence replaced with scrambled letters
  * (use it for words that should look glitched/decrypted). Lines starting with {@code #} are ignored.
+ * <p>
+ * A file named after the client's language next to the poem wins, so "yourmod:texts/end_poem" reads
+ * {@code texts/end_poem/ru_RU.txt} for a Russian client and falls back to {@code texts/end_poem.txt}.
  */
 @SideOnly(Side.CLIENT)
 public class GuiEndPoem extends GuiScreen {
@@ -43,7 +48,6 @@ public class GuiEndPoem extends GuiScreen {
     private static final int LOGO_GAP = 200; // Vanilla keeps the text this far below the logo
     private static final int HOLD_TICKS = 20 * 20; // Rest 20s on the last line before fading out
     private static final int FADE_TICKS = 40;
-    private static final int CREDITS_GAP = 8;
 
     private static final ResourceLocation VIGNETTE = new ResourceLocation("textures/misc/vignette.png");
     private static final String SECRET = "" + EnumChatFormatting.WHITE
@@ -53,7 +57,6 @@ public class GuiEndPoem extends GuiScreen {
     private static final String OBFUSCATED = "" + EnumChatFormatting.WHITE + EnumChatFormatting.OBFUSCATED;
 
     private final ResourceLocation poemText;
-    private final ResourceLocation creditsText;
     private final ResourceLocation music;
     private final ResourceLocation logo;
 
@@ -66,10 +69,8 @@ public class GuiEndPoem extends GuiScreen {
     private PositionedSound playing;
     private boolean rangOut = false; // Poem finished on its own, let the track play to its end
 
-    public GuiEndPoem(ResourceLocation poemText, ResourceLocation creditsText, ResourceLocation music,
-        ResourceLocation logo) {
+    public GuiEndPoem(ResourceLocation poemText, ResourceLocation music, ResourceLocation logo) {
         this.poemText = poemText;
-        this.creditsText = creditsText;
         this.music = music;
         this.logo = logo;
     }
@@ -77,8 +78,7 @@ public class GuiEndPoem extends GuiScreen {
     @Override
     public void initGui() {
         if (lines.isEmpty()) {
-            readPoem(poemText, false);
-            readPoem(creditsText, true);
+            readPoem(poemText);
             contentHeight = lines.size() * LINE_HEIGHT;
         }
 
@@ -148,27 +148,41 @@ public class GuiEndPoem extends GuiScreen {
     // region Text
 
     @SuppressWarnings("unchecked")
-    private void readPoem(ResourceLocation location, boolean credits) {
-        if (location == null) {
+    private void readPoem(ResourceLocation base) {
+        ResourceLocation localized = localized(base);
+
+        if (localized != null && readText(localized)) {
             return;
         }
 
-        Random random = new Random(8124371L);
-        int i;
+        if (!readText(base)) {
+            BetterQuesting.logger.warn("End poem text file not found: {}", base);
+        }
+    }
 
+    /** {@code yourmod:texts/end_poem} -> {@code yourmod:texts/end_poem/ru_RU.txt} for a ru_RU client */
+    @Nullable
+    private static ResourceLocation localized(ResourceLocation base) {
+        String lang = Minecraft.getMinecraft()
+            .getLanguageManager()
+            .getCurrentLanguage()
+            .getLanguageCode();
+        return lang == null || lang.isEmpty() ? null
+            : new ResourceLocation(base.getResourceDomain(), base.getResourcePath() + "/" + lang + ".txt");
+    }
+
+    /** @return true if the file was there and has been read */
+    private boolean readText(ResourceLocation location) {
         try (BufferedReader reader = new BufferedReader(
             new InputStreamReader(
                 mc.getResourceManager()
                     .getResource(location)
                     .getInputStream(),
                 Charsets.UTF_8))) {
-            if (credits) {
-                for (i = 0; i < CREDITS_GAP; i++) {
-                    lines.add("");
-                }
-            }
-
+            Random random = new Random(8124371L);
+            int i;
             String line;
+
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("#")) {
                     continue;
@@ -178,10 +192,6 @@ public class GuiEndPoem extends GuiScreen {
                     "PLAYERNAME",
                     mc.getSession()
                         .getUsername());
-
-                if (credits) {
-                    line = line.replace("\t", "    ");
-                }
 
                 String head, tail;
                 for (; line.contains(
@@ -194,10 +204,10 @@ public class GuiEndPoem extends GuiScreen {
                 lines.addAll(fontRendererObj.listFormattedStringToWidth(line, LINE_WIDTH));
                 lines.add("");
             }
-        } catch (FileNotFoundException e) {
-            BetterQuesting.logger.warn("End poem text file not found: {}", location);
+
+            return true;
         } catch (Exception e) {
-            BetterQuesting.logger.error("Couldn't load end poem text " + location, e);
+            return false;
         }
     }
 

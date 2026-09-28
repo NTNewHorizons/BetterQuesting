@@ -74,7 +74,6 @@ public class NetEndPoem {
 
         GuiScreen poem = new GuiEndPoem(
             text,
-            toLocation(quest.getProperty(NativeProps.POEM_CREDITS)),
             toLocation(quest.getProperty(NativeProps.POEM_MUSIC)),
             toLocation(quest.getProperty(NativeProps.POEM_LOGO)));
 

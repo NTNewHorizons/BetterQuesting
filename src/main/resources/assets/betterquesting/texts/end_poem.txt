@@ -1,24 +1,22 @@
-# Test end poem. Shown when a quest with "is_final": true is completed and no
-# "poem_text" of your own is set. Copy this file into your pack to replace it:
+# Test end poem, shown when a quest with "is_final": true is completed and no
+# "poem_text" of its own is set. Copy these files into your pack to replace them:
 #
-#   config/betterquesting/resources/betterquesting/texts/end_poem.txt
+#   config/betterquesting/resources/betterquesting/texts/end_poem.txt        (fallback)
+#   config/betterquesting/resources/betterquesting/texts/end_poem/en_US.txt
+#   config/betterquesting/resources/betterquesting/texts/end_poem/ru_RU.txt
 #
-# and point the quest at your copy, which then only needs one JSON line:
+# The file named after the client's language wins, so a Russian player reads
+# ru_RU.txt and everyone else reads end_poem.txt.
 #
-#   "is_final": true,
-#   "poem_text": "betterquesting:texts/end_poem.txt",
-#
-# Everything else is optional:
-#   "poem_credits": "betterquesting:texts/end_poem_credits.txt",
-#   "poem_music":   "yourmodid:music/finale",       -> assets/yourmodid/sounds/music/finale.ogg
-#   "poem_logo":    "yourmodid:textures/gui/logo.png",  a 310x44 texture, "" for none
+# Optional, the rest of the final quest:
+#   "poem_music": "yourmodid:music/finale",  -> assets/yourmodid/sounds/music/finale.ogg
+#   "poem_logo":  "yourmodid:textures/gui/logo.png",  a 310x44 texture, "" for none
 #
 # Formatting follows the vanilla end poem:
 #   §        colour and style codes, i.e. §a green, §l bold, §o italic, §n underline
 #   PLAYERNAME  replaced with the name of the player reading it
 #   §f§k§a§b     scrambled letters, for words that should look half decoded
 #   [C]         centre the line instead of aligning it left
-#   \t           turns into four spaces, only in the credits file
 #   #          the rest of the line is a comment and never reaches the screen
 #
 # Blank lines are kept as they are, so leave one between paragraphs.
@@ -39,5 +37,5 @@
 
 §f§k§a§b§3It was good to have you here.
 
-§7                                      §r
-§7        - replace this file with your own poem -
+[C]
+[C]§7- replace this file with your own poem -

@@ -1,0 +1,21 @@
+# English test poem. Copy this folder into your pack and write your own,
+# or point "poem_text" straight at a single file of your own.
+
+§3I see the player you mean.
+§3You are the last one to finish.
+
+§3So this is what it feels like
+§3to be finished.
+
+§3You are still §fPLAYERNAME§3, and the world
+§3is still §fPLAYERNAME§3.
+§3But there is nothing left to do here,
+§3so take a moment. Read it anyway.
+
+§3§oThank you for walking all the way
+§3§oto the end of this book.§r
+
+§f§k§a§b§3It was good to have you here.
+
+[C]
+[C]§7- replace this file with your own poem -

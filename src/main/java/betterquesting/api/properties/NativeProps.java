@@ -53,20 +53,18 @@ public class NativeProps {
         true);
 
     // Marks the very last quest of a pack. Completing it pops {@code GuiEndPoem}, a scrolling
-    // poem/credits screen. See NativeProps.POEM_* for the assets it plays.
+    // poem screen. See NativeProps.POEM_* for the assets it plays.
     public static final IPropertyType<Boolean> IS_FINAL = new PropertyTypeBoolean(
         new ResourceLocation("betterquesting:is_final"),
         false);
 
-    // Resource location of the text file holding the poem (plain lines, § formatting allowed).
+    // Text file holding the poem (plain lines, § formatting allowed). A per language file next to it wins
+    // if there is one, i.e. "betterquesting:texts/end_poem" reads texts/end_poem/ru_RU.txt for a ru client
+    // and falls back to texts/end_poem.txt for everyone else.
     public static final IPropertyType<String> POEM_TEXT = new PropertyTypeString(
         new ResourceLocation("betterquesting:poem_text"),
-        "betterquesting:texts/end_poem.txt");
-    // Optional second text file, appended after the poem. Empty = no credits section.
-    public static final IPropertyType<String> POEM_CREDITS = new PropertyTypeString(
-        new ResourceLocation("betterquesting:poem_credits"),
-        "");
-    // Optional music, i.e. "mymod:music/credits" -> assets/mymod/sounds/music/credits.ogg.
+        "betterquesting:texts/end_poem");
+    // Optional music, i.e. "mymod:music/finale" -> assets/mymod/sounds/music/finale.ogg.
     // Plays once and is left to end on its own if the poem runs out, cut off if skipped.
     public static final IPropertyType<String> POEM_MUSIC = new PropertyTypeString(
         new ResourceLocation("betterquesting:poem_music"),
