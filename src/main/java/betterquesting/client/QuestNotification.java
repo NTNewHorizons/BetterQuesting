@@ -51,6 +51,18 @@ public class QuestNotification {
         pendingScreen = screen;
     }
 
+    /**
+     * Shows the pending screen right away if no notice is queued to hand it off to. Used by screens that
+     * follow a notification, so they still show when notifications are turned off.
+     */
+    public static void flushPendingScreen() {
+        if (pendingScreen != null && notices.isEmpty()) {
+            Minecraft.getMinecraft()
+                .displayGuiScreen(pendingScreen);
+            pendingScreen = null;
+        }
+    }
+
     public static void ScheduleNotice(String mainTxt, String subTxt, ItemStack icon, String sound) {
         ScheduleNotice(mainTxt, subTxt, icon, sound, new NoticeConfig());
     }

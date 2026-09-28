@@ -60,6 +60,7 @@ import betterquesting.client.themes.ThemeRegistry;
 import betterquesting.commands.client.QuestCommandShow;
 import betterquesting.core.BetterQuesting;
 import betterquesting.network.handlers.NetBulkSync;
+import betterquesting.network.handlers.NetEndPoem;
 import betterquesting.network.handlers.NetNameSync;
 import betterquesting.network.handlers.NetNotices;
 import betterquesting.network.handlers.NetQuestSync;
@@ -254,6 +255,7 @@ public class EventHandler {
                     if (!quest.getProperty(NativeProps.SILENT)) {
                         postPresetNotice(quest, player, 2);
                     }
+                    NetEndPoem.sendEndPoem(quest, player);
                 }
             }
 

@@ -52,6 +52,29 @@ public class NativeProps {
         new ResourceLocation("betterquesting:countAsQuest"),
         true);
 
+    // Marks the very last quest of a pack. Completing it pops {@code GuiEndPoem}, a scrolling
+    // poem/credits screen. See NativeProps.POEM_* for the assets it plays.
+    public static final IPropertyType<Boolean> IS_FINAL = new PropertyTypeBoolean(
+        new ResourceLocation("betterquesting:is_final"),
+        false);
+
+    // Resource location of the text file holding the poem (plain lines, § formatting allowed).
+    public static final IPropertyType<String> POEM_TEXT = new PropertyTypeString(
+        new ResourceLocation("betterquesting:poem_text"),
+        "betterquesting:texts/end_poem.txt");
+    // Optional second text file, appended after the poem. Empty = no credits section.
+    public static final IPropertyType<String> POEM_CREDITS = new PropertyTypeString(
+        new ResourceLocation("betterquesting:poem_credits"),
+        "");
+    // Optional looping sound, i.e. "mymod:music/credits" -> assets/mymod/sounds/music/credits.ogg
+    public static final IPropertyType<String> POEM_MUSIC = new PropertyTypeString(
+        new ResourceLocation("betterquesting:poem_music"),
+        "");
+    // Optional 310x44 logo texture scrolled in above the poem. Empty = nothing drawn.
+    public static final IPropertyType<String> POEM_LOGO = new PropertyTypeString(
+        new ResourceLocation("betterquesting:poem_logo"),
+        "betterquesting:textures/gui/end_poem_logo.png");
+
     public static final IPropertyType<EnumQuestVisibility> VISIBILITY = new PropertyTypeEnum<>(
         new ResourceLocation("betterquesting:visibility"),
         EnumQuestVisibility.NORMAL);

@@ -1,0 +1,43 @@
+# Test end poem. Shown when a quest with "is_final": true is completed and no
+# "poem_text" of your own is set. Copy this file into your pack to replace it:
+#
+#   config/betterquesting/resources/betterquesting/texts/end_poem.txt
+#
+# and point the quest at your copy, which then only needs one JSON line:
+#
+#   "is_final": true,
+#   "poem_text": "betterquesting:texts/end_poem.txt",
+#
+# Everything else is optional:
+#   "poem_credits": "betterquesting:texts/end_poem_credits.txt",
+#   "poem_music":   "yourmodid:music/finale",       -> assets/yourmodid/sounds/music/finale.ogg
+#   "poem_logo":    "yourmodid:textures/gui/logo.png",  a 310x44 texture, "" for none
+#
+# Formatting follows the vanilla end poem:
+#   §        colour and style codes, i.e. §a green, §l bold, §o italic, §n underline
+#   PLAYERNAME  replaced with the name of the player reading it
+#   §f§k§a§b     scrambled letters, for words that should look half decoded
+#   [C]         centre the line instead of aligning it left
+#   \t           turns into four spaces, only in the credits file
+#   #          the rest of the line is a comment and never reaches the screen
+#
+# Blank lines are kept as they are, so leave one between paragraphs.
+
+§3I see the player you mean.
+§3You are the last one to finish.
+
+§3So this is what it feels like
+§3to be finished.
+
+§3You are still §fPLAYERNAME§3, and the world
+§3is still §fPLAYERNAME§3.
+§3But there is nothing left to do here,
+§3so take a moment. Read it anyway.
+
+§3§oThank you for walking all the way
+§3§oto the end of this book.§r
+
+§f§k§a§b§3It was good to have you here.
+
+§7                                      §r
+§7        - replace this file with your own poem -
