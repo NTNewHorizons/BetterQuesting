@@ -17,6 +17,9 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.Charsets;
 import org.lwjgl.opengl.GL11;
 
+import betterquesting.api2.client.gui.misc.TextureSizeHelper;
+import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
+import betterquesting.api2.client.gui.resources.textures.SimpleNoUVTexture;
 import betterquesting.core.BetterQuesting;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -35,6 +38,10 @@ public class GuiEndPoem extends GuiScreen {
     private static final int LINE_WIDTH = 274;
     private static final int LINE_HEIGHT = 12;
     private static final float SCROLL_SPEED = 0.5F;
+    private static final int LOGO_WIDTH = 310;
+    private static final int LOGO_HEIGHT = 44;
+    private static final int LOGO_GAP = 200; // Vanilla keeps the text this far below the logo
+    private static final int HOLD_TICKS = 30; // Rest on the last line before fading out
     private static final int FADE_TICKS = 40;
     private static final int CREDITS_GAP = 8;
 
@@ -53,8 +60,9 @@ public class GuiEndPoem extends GuiScreen {
     private final List<String> lines = new ArrayList<>();
 
     private int contentHeight = 0;
+    private int endTick = 0; // Tick at which the last line has scrolled into the middle
     private int tick = 0;
-    private int fade = -1; // Counts up once the poem ran out, then the screen closes itself
+    private IGuiTexture logoTexture;
     private PositionedSound playing;
 
     public GuiEndPoem(ResourceLocation poemText, ResourceLocation creditsText, ResourceLocation music,
@@ -72,6 +80,14 @@ public class GuiEndPoem extends GuiScreen {
             readPoem(creditsText, true);
             contentHeight = lines.size() * LINE_HEIGHT;
         }
+
+        if (logo != null && logoTexture == null) {
+            // Vanilla's drawTexturedModalRect assumes a 256px wide texture, so use the 0..1 UV version instead
+            logoTexture = new SimpleNoUVTexture(logo, TextureSizeHelper.getDimension(logo)).maintainAspect(true);
+        }
+
+        // The last line rests in the middle of the screen, same place the drawing pins it to
+        endTick = (int) (2 * (contentHeight - LINE_HEIGHT + 56.0F + height / 2.0F));
 
         if (playing == null && music != null) {
             playing = new PoemSound(music);
@@ -98,11 +114,7 @@ public class GuiEndPoem extends GuiScreen {
 
         tick++;
 
-        if (fade < 0 && (float) tick > (contentHeight + height + height + 24) / SCROLL_SPEED) {
-            fade = 0;
-        }
-
-        if (fade >= 0 && ++fade > FADE_TICKS) {
+        if (tick >= endTick + HOLD_TICKS + FADE_TICKS) {
             mc.displayGuiScreen((GuiScreen) null);
         }
     }
@@ -221,16 +233,14 @@ public class GuiEndPoem extends GuiScreen {
     private void drawPoem(float partialTicks) {
         float offset = -(tick + partialTicks) * SCROLL_SPEED;
         int x = this.width / 2 - LINE_WIDTH / 2;
-        int y = this.height + 50;
+        int logoY = this.height + 50;
+        int y = logoY + LOGO_GAP;
 
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, offset, 0.0F);
 
-        if (logo != null) {
-            mc.getTextureManager()
-                .bindTexture(logo);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.drawTexturedModalRect(x, y, 0, 0, 310, 44);
+        if (logoTexture != null) {
+            logoTexture.drawTexture(x, logoY, LOGO_WIDTH, LOGO_HEIGHT, this.zLevel, partialTicks);
         }
 
         for (int i = 0; i < lines.size(); i++) {
@@ -280,8 +290,8 @@ public class GuiEndPoem extends GuiScreen {
         GL11.glDisable(GL11.GL_BLEND);
     }
 
-    private void drawFade() {
-        int alpha = (int) (Math.min(fade / (float) FADE_TICKS, 1.0F) * 255.0F);
+    private void drawFade(int fadeTick) {
+        int alpha = (int) (Math.min(fadeTick / (float) FADE_TICKS, 1.0F) * 255.0F);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         Gui.drawRect(0, 0, this.width, this.height, alpha << 24);
@@ -293,8 +303,10 @@ public class GuiEndPoem extends GuiScreen {
         drawBackground(partialTicks);
         drawPoem(partialTicks);
         drawVignette();
-        if (fade >= 0) {
-            drawFade();
+
+        int fadeTick = tick - (endTick + HOLD_TICKS);
+        if (fadeTick > 0) {
+            drawFade(fadeTick);
         }
     }
 
