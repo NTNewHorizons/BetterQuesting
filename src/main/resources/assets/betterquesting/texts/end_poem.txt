@@ -21,21 +21,157 @@
 #
 # Blank lines are kept as they are, so leave one between paragraphs.
 
-§3I see the player you mean.
-§3You are the last one to finish.
-
-§3So this is what it feels like
-§3to be finished.
-
-§3You are still §fPLAYERNAME§3, and the world
-§3is still §fPLAYERNAME§3.
-§3But there is nothing left to do here,
-§3so take a moment. Read it anyway.
-
-§3§oThank you for walking all the way
-§3§oto the end of this book.§r
-
-§f§k§a§b§3It was good to have you here.
-
-[C]
-[C]§7- replace this file with your own poem -
+[C]You made it to the end.
+[C]Well done.
+You defeated the reality of this world.
+You made the impossible bow to you.
+You looked into the face of what once seemed unreachable - and it stepped back.
+You did it. Not everyone can.
+But have you ever wondered...
+who guided your steps?
+Who whispered to you: "§f§k§a§bone more step§r"?
+You could have stopped. At any moment.
+But you didn't.
+And maybe that's why you're here now.
+Wait.
+Don't go. I want to tell you something.
+You earned the ending - and I want to tell you the beginning.
+The world is not always kind.
+You know that. I know you know.
+Sometimes it becomes so harsh it feels like no other world exists.
+Too much noise.
+Too much anger.
+Too much pain that one person cannot fix.
+I've seen it. I know what cruelty is - not from stories.
+And I understood one thing.
+I understood what I don't want.
+I don't want to add one more angry place to this world.
+So before destroying - listen.
+Before fighting - make peace.
+Before hating - try to understand.
+Words are weaker than weapons, until someone has tried them.
+In a fictional world, war begins and ends with the press of a button.
+In the real world, behind every word stands someone's life.
+Remember this boundary.
+There are things that remain fiction.
+And there are things too real to turn into a joke.
+Not every pain deserves to be made into entertainment.
+But I'm not telling you about war.
+I'm telling you about how something good was born from that cruelty.
+When the world around you becomes too heavy, a person is left with few choices.
+You can give up.
+You can become bitter.
+Or you can make something of your own.
+I chose the third.
+Not because I was sure it would change the world.
+Not because I dreamed of greatness.
+I simply wanted to create a place where a person could forget about everything else, if only for a while.
+A place you could come to after a hard day.
+Sit down.
+Exhale.
+And just... be.
+Because home is not always walls.
+Sometimes home is the people who understand you without words.
+Who never shout.
+Next to whom you don't have to pretend.
+If you have people like that - cherish them.
+And become that person for someone else yourself.
+Do you see where I'm going with this?
+I'm saying you don't need to save the whole world.
+Sometimes it's enough to give one person a place where they feel at home.
+There's always been more than enough bad in the world.
+There's no need to create more of it.
+But happiness is in short supply.
+Everything else can be found. Produced. Bought. Built.
+But happiness cannot be produced.
+It can only be given.
+And now we come to the most important part.
+Listen.
+§dLove.§r
+Not necessarily one specific person.
+Love people.
+Love moments.
+Love what you do.
+Because everything in this world that is truly worth anything -
+was made with love.
+Sometimes those we love are far away. Sometimes - very far.
+Sometimes they leave, and there's no calling them back.
+But love cannot measure distance.
+It remains.
+It remains in people.
+In the things you left them.
+In the places where someone once felt good.
+Yes, it hurts. I know.
+Sometimes it seems safer not to love anyone at all.
+But think about it: pain is the price of being able to feel at all.
+And that's the best deal in the world.
+I'm telling you all this not for nothing.
+I'm telling you because you're here.
+Not as a player.
+Not as a name on a list.
+Not as yet another person on the other side of the screen.
+You are the reason all of this has meaning.
+Without you, it would just be lines, files, and emptiness.
+Now you are here, PLAYERNAME.
+And this place is no longer mine.
+It is ours.
+But here's the thing.
+I don't know you. I don't know your name, your time of day, your story.
+It may be morning for you. For me - evening.
+And both of us are right.
+And there's one more thing I know - the thing everyone knows who has lived long enough.
+One day you will leave.
+I will leave too.
+Everyone will leave.
+Worlds will vanish. The light will go out. Names will be forgotten.
+Scary? Me too.
+But listen to what I figured out about this.
+Don't wear time on your wrist like a chain.
+We tamed it. Put it on the leash of clocks and stopwatches - and it ran, steady, the same for everyone.
+But break a clock once -
+and you'll see: time immediately gathers itself back together.
+It stops being segments.
+It becomes whole.
+Why count the days until the end, if the end will come anyway - and you can only live until it?
+Don't count the days.
+§eLive.§r
+While you are here - you can leave something behind.
+Not necessarily something great.
+Not necessarily something famous.
+Sometimes one thing that someone will someday remember is enough.
+One smile.
+One kind act.
+One place where someone once felt good.
+You can.
+And no one can do it for you.
+They tell me: soon machines will replace people.
+I don't believe it.
+A machine can remember everything.
+But it cannot want.
+It guesses the next word.
+But a real thing is not born from guessing.
+It is born when a person cannot help but make it.
+So create.
+§6You are irreplaceable.§r
+So.
+If you ever get the chance to make this world even a little better -
+do it.
+Not because you have to.
+But because you can.
+And if something remains after you,
+let it not be fear.
+Not anger.
+Not destruction.
+Let something good remain.
+And when someone someday asks
+why you did any of this at all,
+let the answer be simple:
+"Because I wanted someone to feel a little better."
+You walked this path to the end.
+But remember one thing.
+This project is not the meaning.
+It is merely the consequence of meaning.
+§bThe meaning is you.§r
+[C]Come back whenever you want.
+[C]Here you will always be welcome.
+[C]§oP.S. Why are you reading this?§r
