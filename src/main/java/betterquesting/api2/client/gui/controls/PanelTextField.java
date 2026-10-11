@@ -25,6 +25,7 @@ import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
+import betterquesting.api2.utils.TextFormattingUtils;
 
 public class PanelTextField<T> implements IGuiPanel {
 
@@ -167,6 +168,10 @@ public class PanelTextField<T> implements IGuiPanel {
         return (int) (scrollHeight * scrollY.readValue());
     }
 
+    public boolean hasVerticalScroll() {
+        return scrollHeight > 0;
+    }
+
     public void setScrollX(int value) {
         if (scrollWidth <= 0) {
             scrollX.writeValue(0F);
@@ -219,6 +224,14 @@ public class PanelTextField<T> implements IGuiPanel {
 
     public String getRawText() {
         return this.text;
+    }
+
+    public int getSelectionStart() {
+        return selectStart;
+    }
+
+    public int getSelectionEnd() {
+        return selectEnd;
     }
 
     public T getValue() {
@@ -588,7 +601,7 @@ public class PanelTextField<T> implements IGuiPanel {
                 break;
             }
             currentLineStart = currentLineEnd;
-            activeFormatting = RenderUtils.getFormatFromString(activeFormatting + line);
+            activeFormatting = TextFormattingUtils.getFormatFromString(activeFormatting + line);
         }
 
         int targetLine = MathHelper.clamp_int(currentLine + direction, 0, lines.size() - 1);
@@ -610,7 +623,7 @@ public class PanelTextField<T> implements IGuiPanel {
         for (int index = 0; index < targetLine; index++) {
             String line = lines.get(index);
             targetLineStart += line.length();
-            targetFormatting = RenderUtils.getFormatFromString(targetFormatting + line);
+            targetFormatting = TextFormattingUtils.getFormatFromString(targetFormatting + line);
         }
 
         String targetLineText = lines.get(targetLine);
@@ -665,7 +678,7 @@ public class PanelTextField<T> implements IGuiPanel {
                     }
 
                     idx += s.length();
-                    lastFormat = RenderUtils.getFormatFromString(lastFormat + s);
+                    lastFormat = TextFormattingUtils.getFormatFromString(lastFormat + s);
                 }
 
                 y *= font.FONT_HEIGHT;
@@ -868,8 +881,10 @@ public class PanelTextField<T> implements IGuiPanel {
             return true;
         } else if (this.isFocused && !lockFocus) {
             this.isFocused = false;
-            this.text = filter.parseValue(this.text)
-                .toString();
+            if (this.text != null && !this.text.isEmpty()) {
+                this.text = filter.parseValue(this.text)
+                    .toString();
+            }
             invalidateVisualLines();
             updateDisplayText();
             // setCursorPosition(0);
